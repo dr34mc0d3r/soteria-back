@@ -2,22 +2,24 @@ const Validator = require('fastest-validator');
 const models = require('../models');
 
 function save(req, res){
-    const post = {
-        title: req.body.title,
-        content: req.body.content,
-        imageUrl: req.body.image_url,
-        categoryId: req.body.category_id,
-        userId: 1
+    const intake = {
+        vrnumber: req.body.vrnumber,
+        fname: req.body.fname,
+        lname: req.body.lname,
+        assignedTo: req.body.assignedTo,
+        modifiedBy: req.body.modifiedBy
     }
 
     const schema = {
-        title: {type:"string", optional: false, max: "100"},
-        content: {type: "string", optional: false, max: "500"},
-        categoryId: {type: "number", optional: false}
+        vrnumber: {type:"string", optional: false, max: "25"},
+        fname: {type: "string", optional: false, max: "25"},
+        lname: {type: "string", optional: false, max: "25"},
+        assignedTo: {type: "number", optional: false},
+        modifiedBy: {type: "number", optional: false}
     }
     
     const v = new Validator();
-    const validationResponse = v.validate(post, schema);
+    const validationResponse = v.validate(intake, schema);
 
     if(validationResponse !== true){
         return res.status(400).json({
@@ -26,10 +28,10 @@ function save(req, res){
         });
     }
     
-    models.Post.create(post).then(result => {
+    models.Intake.create(intake).then(result => {
         res.status(201).json({
-            message: "Post created successfully",
-            post: result
+            message: "Intake created successfully",
+            intake: result
         });
     }).catch(error => {
         res.status(500).json({
@@ -42,12 +44,12 @@ function save(req, res){
 function show(req, res){
     const id = req.params.id;
 
-    models.Post.findByPk(id).then(result => {
+    models.Intake.findByPk(id).then(result => {
         if(result){
             res.status(200).json(result);
         }else{
             res.status(404).json({
-                message: "Post not found!"
+                message: "Intake not found!"
             }) 
         }
     }).catch(error => {
@@ -59,7 +61,7 @@ function show(req, res){
 
 
 function index(req, res){
-    models.Post.findAll().then(result => {
+    models.Intake.findAll().then(result => {
         res.status(200).json(result);
     }).catch(error => {
         res.status(500).json({
@@ -71,23 +73,26 @@ function index(req, res){
 
 function update(req, res){
     const id = req.params.id;
-    const updatedPost = {
-        title: req.body.title, 
-        content: req.body.content,
-        imageUrl: req.body.image_url,
-        categoryId: req.body.category_id,
+    const updatedIntake = {
+        vrnumber: req.body.vrnumber,
+        fname: req.body.fname,
+        lname: req.body.lname,
+        assignedTo: req.body.assignedTo,
+        modifiedBy: req.body.modifiedBy,
     }
     
-    const userId = 1;
+    const assignedTo = req.body.assignedTo;
 
     const schema = {
-        title: {type:"string", optional: false, max: "100"},
-        content: {type: "string", optional: false, max: "500"},
-        categoryId: {type: "number", optional: false}
+        vrnumber: {type:"string", optional: false, max: "25"},
+        fname: {type: "string", optional: false, max: "25"},
+        lname: {type: "string", optional: false, max: "25"},
+        assignedTo: {type: "number", optional: false},
+        modifiedBy: {type: "number", optional: false}
     }
     
     const v = new Validator();
-    const validationResponse = v.validate(updatedPost, schema);
+    const validationResponse = v.validate(updatedIntake, schema);
 
     if(validationResponse !== true){
         return res.status(400).json({
@@ -96,10 +101,10 @@ function update(req, res){
         });
     }
 
-    models.Post.update(updatedPost, {where: {id:id, userId: userId}}).then(result => {
+    models.Intake.update(updatedIntake, {where: {id:id, assignedTo: assignedTo}}).then(result => {
         res.status(200).json({
-            message: "Post updated successfully",
-            post: updatedPost
+            message: "Intake updated successfully",
+            intake: updatedIntake
         });
     }).catch(error => {
         res.status(200).json({
@@ -112,11 +117,11 @@ function update(req, res){
 
 function destroy(req, res){
     const id = req.params.id;
-    const userId = 1;
+    const assignedTo = req.params.assignedTo;
 
-    models.Post.destroy({where:{id:id, userId:userId}}).then(result => {
+    models.Intake.destroy({where:{id:id, assignedTo:assignedTo}}).then(result => {
         res.status(200).json({
-            message: "Post deleted successfully"
+            message: "Intake deleted successfully"
         });
     }).catch(error => {
         res.status(200).json({
