@@ -2,5 +2,11 @@ https://www.youtube.com/watch?v=OfC8BrlEdtA
 
 https://github.com/tharindulucky/blog-api-nodejs-mysql
 
+Copy these files if they have changed because they are not tracked by git
+config/config.json
+nodemon.json
+
+ps -ef | grep node
+kill -9 PROCESS_ID
 
 
