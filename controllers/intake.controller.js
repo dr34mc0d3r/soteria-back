@@ -1,7 +1,7 @@
 const Validator = require('fastest-validator');
 const models = require('../models');
 
-function save(req, res){
+function save(req, res) {
     const intake = {
         vrnumber: req.body.vrnumber,
         fname: req.body.fname,
@@ -11,23 +11,23 @@ function save(req, res){
     }
 
     const schema = {
-        vrnumber: {type:"string", optional: false, max: "25"},
-        fname: {type: "string", optional: false, max: "25"},
-        lname: {type: "string", optional: false, max: "25"},
-        assignedTo: {type: "number", optional: false},
-        modifiedBy: {type: "number", optional: false}
+        vrnumber: { type: "string", optional: false, max: "25" },
+        fname: { type: "string", optional: false, max: "25" },
+        lname: { type: "string", optional: false, max: "25" },
+        assignedTo: { type: "number", optional: false },
+        modifiedBy: { type: "number", optional: false }
     }
-    
+
     const v = new Validator();
     const validationResponse = v.validate(intake, schema);
 
-    if(validationResponse !== true){
+    if (validationResponse !== true) {
         return res.status(400).json({
             message: "Validation failed",
             errors: validationResponse
         });
     }
-    
+
     models.Intake.create(intake).then(result => {
         res.status(201).json({
             message: "Intake created successfully",
@@ -41,16 +41,16 @@ function save(req, res){
     });
 }
 
-function show(req, res){
+function show(req, res) {
     const id = req.params.id;
 
     models.Intake.findByPk(id).then(result => {
-        if(result){
+        if (result) {
             res.status(200).json(result);
-        }else{
+        } else {
             res.status(404).json({
                 message: "Intake not found!"
-            }) 
+            })
         }
     }).catch(error => {
         res.status(500).json({
@@ -60,8 +60,16 @@ function show(req, res){
 }
 
 
-function index(req, res){
-    models.Intake.findAll().then(result => {
+function index(req, res) {
+    const id = req.params.id;
+
+    // findAll where documentation
+    // https://sequelize.org/master/manual/model-querying-basics.html
+    models.Intake.findAll({
+        where: {
+            assignedTo: id
+        }
+    }).then(result => {
         res.status(200).json(result);
     }).catch(error => {
         res.status(500).json({
@@ -72,7 +80,7 @@ function index(req, res){
 }
 
 
-function update(req, res){
+function update(req, res) {
     const id = req.params.id;
     const updatedIntake = {
         vrnumber: req.body.vrnumber,
@@ -81,28 +89,28 @@ function update(req, res){
         assignedTo: req.body.assignedTo,
         modifiedBy: req.body.modifiedBy,
     }
-    
+
     const assignedTo = req.body.assignedTo;
 
     const schema = {
-        vrnumber: {type:"string", optional: false, max: "25"},
-        fname: {type: "string", optional: false, max: "25"},
-        lname: {type: "string", optional: false, max: "25"},
-        assignedTo: {type: "number", optional: false},
-        modifiedBy: {type: "number", optional: false}
+        vrnumber: { type: "string", optional: false, max: "25" },
+        fname: { type: "string", optional: false, max: "25" },
+        lname: { type: "string", optional: false, max: "25" },
+        assignedTo: { type: "number", optional: false },
+        modifiedBy: { type: "number", optional: false }
     }
-    
+
     const v = new Validator();
     const validationResponse = v.validate(updatedIntake, schema);
 
-    if(validationResponse !== true){
+    if (validationResponse !== true) {
         return res.status(400).json({
             message: "Validation failed",
             errors: validationResponse
         });
     }
 
-    models.Intake.update(updatedIntake, {where: {id:id, assignedTo: assignedTo}}).then(result => {
+    models.Intake.update(updatedIntake, { where: { id: id, assignedTo: assignedTo } }).then(result => {
         res.status(200).json({
             message: "Intake updated successfully",
             intake: updatedIntake
@@ -116,11 +124,11 @@ function update(req, res){
 }
 
 
-function destroy(req, res){
+function destroy(req, res) {
     const id = req.params.id;
     const assignedTo = req.params.assignedTo;
 
-    models.Intake.destroy({where:{id:id, assignedTo:assignedTo}}).then(result => {
+    models.Intake.destroy({ where: { id: id, assignedTo: assignedTo } }).then(result => {
         res.status(200).json({
             message: "Intake deleted successfully"
         });
@@ -132,7 +140,7 @@ function destroy(req, res){
     });
 }
 
- 
+
 module.exports = {
     save: save,
     show: show,
