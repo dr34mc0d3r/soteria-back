@@ -68,7 +68,10 @@ function index(req, res) {
     models.Intake.findAll({
         where: {
             assignedTo: id
-        }
+        },
+        order: [
+            ['lname', 'DESC']
+        ]
     }).then(result => {
         res.status(200).json(result);
     }).catch(error => {
