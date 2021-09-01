@@ -1,0 +1,308 @@
+<html>
+
+<head>
+  <title>Hello World!</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <style type="text/css" media="all">
+
+  </style>
+</head>
+
+<body>
+
+
+  <div class="container-fluid">
+    <h3>/user</h3>
+
+
+
+
+    <table width="100%" class="table table-striped">
+      <thead>
+        <tr>
+          <th width="10%" scope="col">Verb</th>
+          <th width="10%" scope="col">Path</th>
+          <th width="30%" scope="col">req body</th>
+          <th width="30%" scope="col">res body</th>
+          <th width="20%" scope="col">comments</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">GET</td>
+          <td align="left">"/"</td>
+          <td align="left">none</td>
+          <td align="left">
+            <pre><code>
+            [
+              {
+                  "_id": "60f07cc3510add00acf6a476",
+                  "userName": "Chris Jackson",
+                  "emailAddress": "root.operator@gmail.com"
+              },
+            ]
+          </code></pre>
+          </td>
+          <td align="left">authorize, userController.listall</td>
+        </tr>
+        <tr>
+          <td align="left">GET</td>
+          <td align="left">"/profile/id"</td>
+          <td align="left">none</td>
+          <td align="left">
+            <pre><code>
+            {
+              "result": {
+                  "_id": "60f5be04df8e42003e5228e6",
+                  "userName": "Tony Jackson",
+                  "emailAddress": "ppproot.operator@gmail.com"
+              }
+            }
+          </code></pre>
+          </td>
+          <td align="left">authorize, userController.profile</td>
+        </tr>
+        <tr>
+          <td align="left">POST</td>
+          <td align="left">"/register"</td>
+          <td align="left">
+            <pre><code>
+            {
+              "userName": "Tony Jackson",
+              "emailAddress": "sssroot.operator@gmail.com",
+              "password": "123456"
+            }
+          </code></pre>
+          </td>
+          <td align="left">
+            <pre><code>
+            {
+              "message": "User successfully created!",
+              "result": {
+                  "_id": "60f5bea6a6adb9004e923963",
+                  "userName": "Tony Jackson",
+                  "emailAddress": "fffroot.operator@gmail.com"
+              }
+            }
+          </code></pre>
+          </td>
+          <td align="left">userController.register</td>
+        </tr>
+
+        <tr>
+          <td align="left">POST</td>
+          <td align="left">"/signin"</td>
+          <td align="left">
+            <pre><code>
+            {
+              "userName": "root.operator@gmail.com",
+              "password": "123456"
+            }
+          </code></pre>
+          </td>
+          <td align="left">
+            <pre><code>
+            {
+              "token": "eyJhb...JWTToken",
+              "expiresIn": 3600,
+              "result": {
+                  "_id": "60f07cc3510add00acf6a476",
+                  "userName": "Chris Jackson",
+                  "emailAddress": "root.operator@gmail.com"
+              }
+            }
+          </code></pre>
+          </td>
+          <td align="left">userController.signin</td>
+        </tr>
+
+
+
+
+
+        <tr>
+          <td align="left">PUT</td>
+          <td align="left">"/update/id"</td>
+          <td align="left">
+            <pre><code>
+              {
+                "userName": "333update Tony Jackson",
+                "emailAddress": "tony@gmail.com",
+                "password": "123456"
+              }
+          </code></pre>
+          </td>
+          <td align="left">
+            <pre><code>
+              {
+                "result": {
+                    "_id": "60f07ddd2357f500d2adac0e"
+                }
+              }
+          </code></pre>
+          </td>
+          <td align="left">authorize, userController.update</td>
+        </tr>
+
+
+        <tr>
+          <td align="left">DELETE</td>
+          <td align="left">"/delete/id"</td>
+          <td align="left">none</td>
+          <td align="left">
+            <pre><code>
+              {
+                "result": "60f07ddd2357f500d2adac0e"
+              }
+          </code></pre>
+          </td>
+          <td align="left">authorize, userController.update</td>
+        </tr>
+
+
+
+
+
+
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h3>/test</h3>
+
+
+
+
+    <table width="100%" class="table table-striped">
+      <thead>
+        <tr>
+          <th width="10%" scope="col">Verb</th>
+          <th width="10%" scope="col">Path</th>
+          <th width="30%" scope="col">req body</th>
+          <th width="30%" scope="col">res body</th>
+          <th width="20%" scope="col">comments</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">POST</td>
+          <td align="left">"/add"</td>
+          <td align="left">none</td>
+          <td align="left">
+            <pre><code>
+            
+          </code></pre>
+          </td>
+          <td align="left">authorize, testController.testInsert</td>
+        </tr>
+        <tr>
+          <td align="left">GET</td>
+          <td align="left">"/list"</td>
+          <td align="left">none</td>
+          <td align="left">
+            <pre><code>
+            
+          </code></pre>
+          </td>
+          <td align="left">authorize, testController.testList</td>
+        </tr>
+
+
+        <tr>
+          <td align="left">GET</td>
+          <td align="left">"/find"</td>
+          <td align="left">none</td>
+          <td align="left">
+            <pre><code>
+            
+          </code></pre>
+          </td>
+          <td align="left">authorize, testController.testFind</td>
+        </tr>
+
+        <tr>
+          <td align="left">GET</td>
+          <td align="left">"/findnested"</td>
+          <td align="left">none</td>
+          <td align="left">
+            <pre><code>
+            
+          </code></pre>
+          </td>
+          <td align="left">authorize, testController.testFindNested</td>
+        </tr>
+
+
+        <tr>
+          <td align="left">GET</td>
+          <td align="left">"/many"</td>
+          <td align="left">none</td>
+          <td align="left">
+            <pre><code>
+            
+          </code></pre>
+          </td>
+          <td align="left">authorize, testController.testInsertMany</td>
+        </tr>
+
+        <tr>
+          <td align="left">GET</td>
+          <td align="left">"/many5x"</td>
+          <td align="left">none</td>
+          <td align="left">
+            <pre><code>
+            
+          </code></pre>
+          </td>
+          <td align="left">authorize, testController.testInsertMany5x</td>
+        </tr>
+
+        <tr>
+          <td align="left">GET</td>
+          <td align="left">"/count"</td>
+          <td align="left">none</td>
+          <td align="left">
+            <pre><code>
+            
+          </code></pre>
+          </td>
+          <td align="left">authorize, testController.testCount</td>
+        </tr>
+
+
+
+
+
+
+
+
+
+
+
+      </tbody>
+    </table>
+
+
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

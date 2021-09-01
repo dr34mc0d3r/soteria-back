@@ -1,0 +1,45 @@
+SSH
+digiticket-salt.centralus.cloudapp.azure.com
+saltusadmin
+znCEMbYY55EdxBC
+
+
+good example of additons for ingesting client data
+
+https://github.com/hagopj13/node-express-boilerplate
+
+
+https://dev.to/efe136/how-to-enable-mongodb-authentication-with-docker-compose-2nbp
+
+docker logs mongodb 2>&1 | grep "Authentication failed"
+
+use admin
+> db.createUser(
+... {
+... user: "saltusadminMongo",
+... pwd: "We$4-W1!aa8*lL",
+... roles:["root"]
+... }
+... );
+
+use saltus
+> db.createUser(
+... {
+... user: "digiticketMongoUser",
+... pwd: "Ffr4$1!!pP-Exr",
+... roles:[
+... {
+... role: "readWrite",
+... db: "saltus"
+... }
+... ]
+... }
+... );
+
+
+
+
+Backup Restore
+https://www.youtube.com/watch?v=Ri1U634eAEs
+
+

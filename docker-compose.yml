@@ -8,8 +8,11 @@ services:
             - PGID=1000
         volumes:
             - ./mongodb/database:/data/db
+        command: [--auth]
         ports:
             - 27017:27017
+        networks:
+            - salt-net
   
     my-node-app:
         depends_on:
@@ -23,4 +26,25 @@ services:
             - "3000:3000"
         volumes:
             - .:/app
+        networks:
+            - salt-net
 
+    nginx:
+        image : nginx
+        container_name: nginx
+        hostname: nginx
+        volumes:
+            - ./nginx:/usr/share/nginx/html
+            - ./nginx:/etc/nginx/conf.d
+            - ./ssl:/etc/nginx/ssl
+        ports:
+            - "80:80"
+            - "443:443"
+        depends_on:
+            - my-node-app
+        networks:
+            - salt-net
+    
+networks:
+    salt-net:
+        external: true
